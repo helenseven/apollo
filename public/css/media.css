@@ -1,0 +1,124 @@
+@media only screen and (min-width : 320px) and (max-width : 480px){
+    .sidebar {width: 15rem!important;}
+    #content-wrapper{width: 100%;}
+    .d-md-inline {display: inline!important;}
+    .sidebar .nav-item .collapse, .sidebar .nav-item .collapsing { margin: 0 3rem;}
+
+    .form-group{width: 23%;}
+    .grid-view {float: right;}
+    table,.w0, .btn-add,.btn-report{ font-size: 0.4em;}
+    .btn-add,.btn-report{width: 35%;}
+    .sidebar .nav-item .collapse {
+        position: relative;
+        left: 0;
+        z-index: 1;
+        top: 0;
+        -webkit-animation: none;
+        animation: none;}
+}
+
+@media screen and (max-width: 600px) {
+    .col-25, .col-75, input[type=submit] {
+        width: 100%;
+        margin-top: 0.5em;
+    }
+}
+
+@media (min-width : 481px) and(max-width: 575px){
+    #accordionSidebar{padding: 0em 6em;}
+    .topbar .dropdown .dropdown-menu {
+        width: auto;
+        right: 0;}
+    #content-wrapper{width: 100%;}
+    #accordionSidebar .nav-item .nav-link {padding: 0.5rem 4.5rem;}
+    .d-sm-block {display: block!important;}
+    .btn-add,.btn-report{width: 40%;}
+    .sidebar .nav-item .collapse {
+        position: relative;
+        left: 0;
+        z-index: 1;
+        top: 0;
+        -webkit-animation: none;
+        animation: none;}
+}
+
+@media (min-width: 576px) and (max-width: 767px){
+    #accordionSidebar{
+        width: 32%;
+        padding: 0em 6em;}
+    .topbar .dropdown .dropdown-menu {
+        width: auto;
+        right: 0;}
+    #content-wrapper{width: 100%;}
+    #accordionSidebar .nav-item .nav-link {padding: 0.5rem 4.5rem;}
+    .d-sm-block {display: block!important;}
+    .btn-add,.btn-report{width: 40%;}
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    #accordionSidebar{
+        padding: 0.75rem 15rem;
+        margin-block-end: 0;
+    }
+    #content-wrapper{width: 100%;}
+    .sidebar .nav-item .nav-link {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 1rem;
+        width: 14rem;
+    }
+    .sidebar {width: 16rem!important;}
+    .sidebar .nav-item .collapse {
+        position: relative;
+        left: 0;
+        z-index: 1;
+        top: 0;
+        -webkit-animation: none;
+        animation: none;}
+}
+
+@media (min-width: 992px) and (max-width: 1199px){
+    #accordionSidebar{
+        width: 32%;
+        padding: 0em 14em;}
+    .sidebar {
+        width: 16rem!important;
+        padding: 0em 15em;}
+    #content-wrapper{width: 100%;}
+    .d-md-inline {display: inline!important;}
+    .sidebar .nav-item .collapse, .sidebar .nav-item .collapsing {
+        margin: 0 1rem;}
+    .sidebar .nav-item .collapse {
+        position: relative;
+        left: 0;
+        z-index: 1;
+        top: 0;
+        -webkit-animation: none;
+        animation: none;
+    }
+    .sidebar .nav-item .collapse .collapse-inner {
+        border-radius: 0;
+        box-shadow: none;
+    }
+    #accordionSidebar .nav-item .nav-link {
+        padding: 0.75rem 1rem;
+        margin-block-end: 0;
+    }
+    .sidebar .nav-item .nav-link {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 1rem;
+        width: 14rem;
+    }
+    .btn-add,.btn-report{width: 40%;}
+    .science-rules{padding: 0;}
+}
+
+
+@media (min-width: 1200px){
+    #accordionSidebar .nav-item .nav-link {padding: 0.5rem 4.5rem;}
+    #accordionSidebar{width: 20%;}
+    #content-wrapper{ width: 70%;}
+  }

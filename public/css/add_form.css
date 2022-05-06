@@ -1,0 +1,70 @@
+* {
+  box-sizing: border-box;
+}
+
+input[type=text], select, textarea {
+  width: 60%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+.btn_del,.btn_edit,.btn_down {
+  font-family: 'El Messiri', sans-serif;
+  font-size: .9em;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.btn_del,.btn_edit{
+  float: right;
+  margin: 1em;
+}
+.btn_edit,.btn_down{
+  background-color: rgba(96, 147, 93, 0.8);
+}
+.btn_del{
+  background-color:rgba(214, 73, 51);
+}
+.btn_edit:hover {
+  background: #14342B;
+    color: #E2EFD9;
+}
+.btn_del:hover{
+  background: rgba(73, 15, 6);
+  color: #E2EFD9;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+
+.col-75 {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
