@@ -1,59 +1,51 @@
 @extends('layouts.app')
 @section('content')
 <div class="container-fluid">
-    <h1 class="h3 mb-1 text-green-800" style="display:none">Успішність:Загальний рейтинг</h1>
+    <h1 class="h3 mb-1 text-green-800" style="display:none">Успішність:Стипендіальний рейтинг</h1>
     <nav aria-label="breadcrumb">
         <ol id="w5" class="breadcrumb">
             <li class="breadcrumb-item active" aria-current="page">Успішність</li>
-            <li class="breadcrumb-item active" aria-current="page">Загальний рейтинг</li>
+            <li class="breadcrumb-item active" aria-current="page">Стипендіальний рейтинг</li>
         </ol>
     </nav>
 
     <div id="w0">
         <div id="w1" class="card shadow mb-2">
             <div class="card-body">
-                <form id="form-w0" class="filter-form" action="/progress/rating" method="POST">
+                <form id="form-w0" class="filter-form" action="/progress/scholarship_rating" method="POST">
+
+                    @csrf
+
                     <input type="hidden" name="_csrf-frontend" value="Rh5oVtSGF-e0xqfX6V5LfS5ynBdrX-U-luXwvFfkFzMRTTADncc6lOL09oKwMjoKWUbPVBFnpHrAiZ2MLqFwdQ==">
                     <div class="filter-form-fields-content row">
                         <div class="form-group col-md-3">
                             <label>Факультет</label>
-                            <select id="ratingform-facultyid" class="form-control" name="RatingForm[facultyId]">
+                            <select id="ratingform-facultyid" class="form-control" name="department">
                                 <option value="">--Факультет--</option>
                                 @foreach ($departments as $department)
-                                <option value="{{$department->id}}">{{$department->title}}</option>
+                                <option @if ($department->id == $departmentId) selected @endif value="{{$department->id}}">{{$department->title}}</option>
                                 @endforeach
-                                <!-- <option value="13">Аспірантура</option>
-                                <option value="14">Навчально-науковий інститут електричної інженерії та інформаційних техноголій</option>
-                                <option value="15">Навчально-науковий інститут механічної інженерії, транспорту та природничих наук</option>
-                                <option value="4" selected="">Факультет економіки і управління</option>
-                                <option value="6">Факультет права, гуманітарних і соціальних наук</option>
-                                <option value="7">Навчальний відділ</option> -->
                             </select>
                         </div>
                         <div class="form-group col-md-1">
                             <label>Курс</label>
-                            <select id="ratingform-course" class="form-control" name="RatingForm[course]">
+                            <select id="ratingform-course" class="form-control" name="course">
                                 <option value="">--Курс--</option>
                                 @foreach ($courses as $course)
-                                <option value="{{$course->id}}">{{$course->number}}</option>
+                                <option @if ($course->id == $courseId) selected @endif value="{{$course->id}}">{{$course->number}}</option>
                                 @endforeach
-                                <!-- <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4" selected="">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option> -->
                             </select>
                         </div>
                         <div class="form-group col-md-5">
                             <label>Група</label>
-                            <select id="ratingform-streamid" class="form-control" name="RatingForm[streamId]">
+                            <select id="ratingform-streamid" class="form-control" name="group">
                                 <option value="">--Група--</option>
                                 @foreach ($groups as $group)
-                                <option value="{{$group->id}}">{{$group->title}}</option>
+                                <option @if ($group->id == $groupId) selected @endif value="{{$group->id}}">{{$group->title}}</option>
                                 @endforeach
                             </select>
                         </div>
+                        <button class="btn btn-success" type="submit"> Знайти </button>
                 </form>
             </div>
         </div>
@@ -88,47 +80,30 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="table-success" data-key="0">
-                        <td>1</td>
-                        <td>Будній Олег Ігорович</td>
-                        <td>Звичайна</td>
-                        <td>84.5</td>
-                        <td>91.67</td>
-                        <td>2</td>
+                    <?php $i = 1 ?>
+                    @foreach($students as $student)
+                    <tr @if($student->benefit == 1) class="table-primary" @elseif($i == 1) class="table-success" @elseif($i !== 1 && $i <= $scholarshipAmount) class="table-warning" @endif data-key="39270">
+                            <td>{{$student->id}}</td>
+                            <td>{{$student->fullname}}</td>
+                            <td>@if($student->benefit == 1)Соціальна @elseif($i == 1) Підвищена @elseif($i !== 1 && $i <= $scholarshipAmount) Звичайна @endif</td>
+                            <td>{{$student->total_mark}}</td>
+                            <td>{{$student->credit}}</td>
+                            <td>{{$student->additional_score}}</td>
                     </tr>
-                    <tr class="table-success" data-key="1">
-                        <td>2</td>
-                        <td>Ціома Олександр Вікторович</td>
-                        <td>Звичайна</td>
-                        <td>82.38</td>
-                        <td>91.53</td>
-                        <td>0</td>
-                    </tr>
-                    <tr class="table-warning" data-key="2">
-                        <td>3</td>
-                        <td>Таран Костянтин Сергійович</td>
-                        <td>Звичайна</td>
-                        <td>70.25</td>
-                        <td>72.5</td>
-                        <td>5</td>
-                    </tr>
-                    <tr class="" data-key="3">
-                        <td>4</td>
-                        <td>Середа Олексій Сергійович</td>
-                        <td></td>
-                        <td>67.89</td>
-                        <td>75.43</td>
-                        <td>0</td>
-                    </tr>
+                    <?php $i++ ?>
+                    @endforeach
                 </tbody>
             </table>
             <!-- END TABLE -->
-
-            <div class="btn-report" href="#" data-toggle="collapse">
-                <img class="fas fa-fw fa-report" src="../../img/report.svg" alt=" ">
-                <span class="btn_text">Сформувати звіт</span>
+            <div>
+                @if (isset($_SESSION['worker']))
+                <div class="btn-report" href="#" data-toggle="collapse">
+                    <a href="/progress/scholarship_rating/get_zvit" class="btn-link">
+                        <img class="fas fa-fw fa-report" src="../../img/report.svg" alt=" ">
+                        <span class="btn_text">Сформувати звіт</span>
+                </div>
+                @endif
             </div>
-            </ul>
         </div>
     </div>
 </div>

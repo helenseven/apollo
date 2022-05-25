@@ -23,7 +23,7 @@
     <p>І вона буде додана до бази даних</p>
 
     <div class="container">
-        <form action="/scientificactivity/accrued_points/update/{{$scientificActivity->id}}" id="edit_form" method="POST">
+        <form action="/scientificactivity/accrued_points/update/{{$scientificActivity->id}}" id="edit_form" method="POST" enctype="multipart/form-data">
             @csrf
 
 
@@ -37,11 +37,6 @@
                         @foreach ($students as $student)
                         <option @if ($student->id === $scientificActivity->student_id) selected @endif value="{{$student->id}}">{{$student->fullname}}</option>
                         @endforeach
-                        <!-- <option value="0">Коваленко Анна Георгіївна</option>
-                        <option value="1">Коваленко Анна Георгіївна</option>
-                        <option value="2">Дігтяр Євгеній Ігоревич</option>
-                        <option value="3">Куценко Євгеній Ігоревич</option>
-                        <option value="4">Дробаха Віктор Валерійович</option> -->
                     </select>
                 </div>
             </div>
@@ -82,7 +77,7 @@
                     <label class="form-check-label" for="flexCheckDefault">Завантажити скан</label>
                 </div>
                 <div class="col-75">
-                    <input class="btn_down" type="file" value="Завантажити скан">
+                    <input class="btn_down" type="file" name="scan" value="Завантажити скан">
                 </div>
             </div>
             <div class="row">

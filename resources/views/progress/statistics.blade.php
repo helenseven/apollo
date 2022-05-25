@@ -11,54 +11,47 @@
 
     <div id="w1" class="card shadow mb-2">
         <div class="card-body">
-            <form id="form-w0" class="filter-form" action="/progress/rating" method="POST">
+            <form id="form-w0" class="filter-form" action="/progress/statistics" method="POST">
                 <input type="hidden" name="_csrf-frontend" value="Rh5oVtSGF-e0xqfX6V5LfS5ynBdrX-U-luXwvFfkFzMRTTADncc6lOL09oKwMjoKWUbPVBFnpHrAiZ2MLqFwdQ==">
+
+                @csrf
+
                 <div class="filter-form-fields-content row">
                     <div class="form-group col-md-3">
                         <label>Факультет</label>
-                        <select id="ratingform-facultyid" class="form-control" name="RatingForm[facultyId]">
+                        <select id="ratingform-facultyid" class="form-control" name="department">
                             <option value="">--Факультет--</option>
-                            <option value="13">Аспірантура</option>
-                            <option value="14">Навчально-науковий інститут електричної інженерії та інформаційних техноголій</option>
-                            <option value="15">Навчально-науковий інститут механічної інженерії, транспорту та природничих наук</option>
-                            <option value="4" selected="">Факультет економіки і управління</option>
-                            <option value="6">Факультет права, гуманітарних і соціальних наук</option>
-                            <option value="7">Навчальний відділ</option>
+                            @foreach ($departments as $department)
+                            <option @if ($department->id == $departmentId) selected @endif value="{{$department->id}}">{{$department->title}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group col-md-1">
                         <label>Курс</label>
-                        <select id="ratingform-course" class="form-control" name="RatingForm[course]">
+                        <select id="ratingform-course" class="form-control" name="course">
                             <option value="">--Курс--</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4" selected="">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
+                            @foreach ($courses as $course)
+                            <option @if ($course->id == $courseId) selected @endif value="{{$course->id}}">{{$course->number}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group col-md-5">
                         <label>Група</label>
-                        <select id="ratingform-streamid" class="form-control" name="RatingForm[streamId]">
-                            <option value="">--Потік--</option>
-                            <option value="2254">ЕК-18-1</option>
-                            <option value="2269">МК-18-1</option>
-                            <option value="2287">МК-18-1з</option>
-                            <option value="2268">МН-18-1</option>
-                            <option value="2271" selected="">МН-18-1з</option>
-                            <option value="2262">ОбОп-18-1з</option>
-                            <option value="2270">ТР-18-1</option>
-                            <option value="2265">ФБС-18-1</option>
-                            <option value="2422">ФБС-19-1кзс(2к)</option>
+                        <select id="ratingform-streamid" class="form-control" name="group">
+                            <option value="">--Група--</option>
+                            @foreach ($groups as $group)
+                            <option @if ($group->id == $groupId) selected @endif value="{{$group->id}}">{{$group->title}}</option>
+                            @endforeach
                         </select>
                     </div>
+                    <button class="btn btn-success" type="submit"> Знайти </button>
             </form>
         </div>
     </div>
 </div>
 <div id="w2" class="card shadow mb-2">
     <div class="card-body">
+        @if ($other !== 0)
         <div id="statisticchart">
         </div>
 
@@ -74,10 +67,10 @@
             function drawChart() {
                 var data = google.visualization.arrayToDataTable([
                     ['Scholarships', 'Students per scholarships'],
-                    ['Підвищена', 8],
-                    ['Звичайна', 6],
-                    ['Соціальна', 4],
-                    ['Не нараховується', 6]
+                    ['Підвищена', {{$upperScholarship}}],
+                    ['Звичайна', {{$scholarshipAmount}}],
+                    ['Соціальна', {{$socialCount}}],
+                    ['Не нараховується', {{$other}}]
                 ]);
 
                 // Optional; add a title and set the width and height of the chart
@@ -92,6 +85,7 @@
                 chart.draw(data, options);
             }
         </script>
+        @endif
     </div>
 </div>
 @endsection

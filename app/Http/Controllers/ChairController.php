@@ -12,13 +12,25 @@ use Illuminate\Support\Facades\View;
 class ChairController extends Controller
 {
     //
-    public function index()
-    {
-        $chairWorkers = DB::select('SELECT chair_workers.*, positions.title FROM chair_workers 
-            Join positions on chair_workers.position_id = positions.id
-        ');
+    public function index(Request $request)
+    {if ($request->chair !== null) {
+        $query = 'SELECT
+        chair_workers.id, chair_workers.fullname, positions.title FROM chair_workers 
+        Join positions On chair_workers.position_id = positions.id
+       
+       WHERE chair_workers.chair_id = ' . $request->chair;
+            $chairWorkers = DB::select($query);
+            $chairId = $request->chair;
+    }else {
+        $chairWorkers = [];
+        $chairId = 0;
+    }
         $chairs = Chair::all();
-        return View::make('list.chair')->with(['chairs' => $chairs, 'chairWorkers' => $chairWorkers]);
+        return View::make('list.chair')->with([
+            'chairs' => $chairs,
+            'chairWorkers' => $chairWorkers,
+            'chairId' => $chairId,
+        ]);
     }
 
     public function addChair()

@@ -8,7 +8,7 @@
     <div id="w1">
         <div id="w2" class="card shadow mb-2">
             <div class="card-body">
-                <h1>Hello chair</h1>
+                <h1>Wellcome, to Apollo, @if (isset($_SESSION['worker'])) {{$_SESSION['worker']['name']}} @else Гість @endif</h1>
             </div>
         </div>
     </div>

@@ -25,7 +25,6 @@
 					<div class="section pb-5 pt-5 pt-sm-2 text-center">
 						<h6 class="mb-0 pb-3">
 							<span>увійти </span>
-							<span>зареєструватись</span>
 						</h6>
 						<a href="/" class="logo" target="_blank">
 							<img src="img/logo.png" alt=""></a>
@@ -35,21 +34,25 @@
 									<div class="center-wrap">
 										<div class="section text-center">
 											<h4 class="mb-4 pb-3">Вхід</h4>
+											<form action="/login" method="POST">
+												@csrf
 											<div class="form-group">
-												<input type="email" name="logemail" class="form-style" placeholder="Email" id="logemail" autocomplete="off" required>
+												<input type="email" name="email" class="form-style" placeholder="Email" id="logemail" autocomplete="off" required>
 												<i class="input-icon uil uil-at"></i>
 											</div>	
 											<div class="form-group mt-2">
-												<input type="password" name="logpass" class="form-style" placeholder="Password" id="logpass" autocomplete="off" required>
+												<input type="password" name="password" class="form-style" placeholder="Password" id="logpass" autocomplete="off" required>
 												<i class="input-icon uil uil-lock-alt"></i>
 											</div>
-											<a href="#" class="btn mt-4">увійти</a>
+											<button type="submit" class="btn mt-4">увійти</button>
+											</form>
 				      					</div>
 			      					</div>
 			      				</div>
 								
 			      			</div>
 			      		</div>
+
 			      	</div>
 		      	</div>
 	      	</div>

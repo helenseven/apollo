@@ -32,12 +32,6 @@
                         @foreach ($departments as $department)
                         <option @if ($department->id === $student->department_id) selected @endif value="{{$department->id}}">{{$department->title}}</option>
                         @endforeach
-                        <!-- <option value="13">Аспірантура</option>
-                        <option value="14" selected>Навчально-науковий інститут електричної інженерії та інформаційних техноголій</option>
-                        <option value="15">Навчально-науковий інститут механічної інженерії, транспорту та природничих наук</option>
-                        <option value="4">Факультет економіки і управління</option>
-                        <option value="6">Факультет права, гуманітарних і соціальних наук</option>
-                        <option value="7">Навчальний відділ</option> -->
                     </select>
                 </div>
             </div>
@@ -52,13 +46,6 @@
                         @foreach ($courses as $course)
                         <option @if ($course->id === $student->course_id) selected @endif value="{{$course->id}}">{{$course->number}}</option>
                         @endforeach
-                        <!-- <option value="1">1</option>
-                        <option value="2" selected>2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option> -->
                     </select>
                 </div>
             </div>
@@ -73,15 +60,6 @@
                         @foreach ($groups as $group)
                         <option @if ($group->id === $student->group_id) selected @endif value="{{$group->id}}">{{$group->title}}</option>
                         @endforeach
-                        <!-- <option value="2536">БТ-18-1</option>
-                        <option value="2534">ЕО-18-1</option>
-                        <option value="2656">ПМс-19-1</option>
-                        <option value="2538">ФТ-18-1</option>
-                        <option value="2542">ЦБ-18-1</option>
-                        <option value="2663" selected>АТс-19-2з</option>
-                        <option value="2753">ГЗс-19-1з</option>
-                        <option value="2657">ПМс-19-1з</option>
-                        <option value="2543">ЦБ-18-1з</option> -->
                     </select>
                 </div>
             </div>
@@ -109,6 +87,18 @@
                     <input type="number" id="zalikovka_number" name="zalikovka_number" value="{{$student->zalikovka_number}}" required>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-25">
+                    <label class="form-check-label" for="flexCheckDefault">Наявні пільги</label>
+                </div>
+                <div class="col-75">
+                    <select name="benefit">
+                        <option value="1">Ні</option>
+                        <option value="2">Так</option>
+                    </select>
+                </div>
+            </div>
+
             <div class="row">
                 <a class="btn_edit" role="button" id="submit_form">Редагувати</a>
                 <a role="button" href="/list/student/delete/{{$student->id}}" class="btn_del">Видалити</a>

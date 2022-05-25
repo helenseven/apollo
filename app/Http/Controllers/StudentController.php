@@ -7,18 +7,45 @@ use App\Models\Department;
 use App\Models\Group;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 
 class StudentController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
-        $students = Student::all();
+        if ($request->department !== null && $request->course !== null && $request->group !== null) {
+            $query = 'SELECT
+            students.id, students.fullname, students.card_number, students.zalikovka_number 
+             FROM students 
+           
+           WHERE students.department_id = ' . $request->department
+                . ' AND students.course_id = ' . $request->course
+                . ' AND students.group_id = ' . $request->group;
+                $students = DB::select($query);
+                $departmentId = $request->department;
+                $courseId = $request->course;
+                $groupId = $request->group;
+        }else {
+            $students = [];
+            $departmentId = 0;
+            $courseId = 0;
+            $groupId = 0;
+           
+        }
         $departments = Department::all();
         $courses = Course::all();
         $groups = Group::all();
-        return View::make('list.group')->with(['courses' => $courses, 'departments' => $departments, 'groups' => $groups, 'students' => $students]);
+        return View::make('list.group')->with([
+            'courses' => $courses, 
+            'departments' => $departments,
+            'groups' => $groups,
+            'students' => $students,
+            'departmentId' => $departmentId,
+            'groupId' => $groupId,
+            'courseId' => $courseId
+        ]);
     }
 
     public function addStudent()
@@ -26,7 +53,7 @@ class StudentController extends Controller
         $departments = Department::all();
         $courses = Course::all();
         $groups = Group::all();
-        return View::make('forms.add_st')->with(['departments' => $departments,'courses' => $courses, 'groups' => $groups]);
+        return View::make('forms.add_st')->with(['departments' => $departments, 'courses' => $courses, 'groups' => $groups]);
     }
 
     public function createStudent(Request $request)
@@ -37,7 +64,8 @@ class StudentController extends Controller
             'group' => 'required|numeric',
             'fullname' => 'required|max:255',
             'card_number' => 'required|numeric',
-            'zalikovka_number' => 'required|numeric'
+            'zalikovka_number' => 'required|numeric',
+            'benefit' => 'required|numeric'
         ]);
 
 
@@ -48,6 +76,7 @@ class StudentController extends Controller
         $student->fullname = $validated['fullname'];
         $student->card_number = $validated['card_number'];
         $student->zalikovka_number = $validated['zalikovka_number'];
+        $student->benefit = $validated['benefit'];
         $student->save();
         return redirect('/list/group');
     }
@@ -69,7 +98,8 @@ class StudentController extends Controller
             'group' => 'required|numeric',
             'fullname' => 'required|max:255',
             'card_number' => 'required|numeric',
-            'zalikovka_number' => 'required|numeric'
+            'zalikovka_number' => 'required|numeric',
+            'benefit' => 'required|numeric'
         ]);
 
         $student = Student::find($id);
@@ -79,6 +109,7 @@ class StudentController extends Controller
         $student->fullname = $validated['fullname'];
         $student->card_number = $validated['card_number'];
         $student->zalikovka_number = $validated['zalikovka_number'];
+        $student->benefit = $validated['benefit'];
         $student->save();
         return redirect('/list/group');
     }

@@ -121,9 +121,15 @@
                                 <span class="caret"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                @if (!isset($_SESSION['worker']))
                                 <a class="dropdown-item" href="/login">
                                     <i class="mr-2 fas fa-sign-in-alt"></i>Увійти
                                 </a>
+                                @else
+                                <a class="dropdown-item" href="/logout">
+                                    <i class="mr-2 fas fa-sign-in-alt"></i>Вийти
+                                </a>
+                                @endif
                             </div>
                         </li>
                     </ul>

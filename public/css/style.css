@@ -273,7 +273,7 @@ dl,ol,ul {
 .table-bordered thead td,.table-bordered thead th {border-bottom-width: 2px;}
 .table-bordered td,.table-bordered th {border: 1px solid #60935d !important;}
 
-tr:nth-child(2n+1) {
+tr {
     background-color: #E2EFD9;
 }
 
@@ -378,12 +378,12 @@ button,input,optgroup,select,textarea {
     line-height: inherit;
 }
 
-.btn-add,.btn-table {background: rgba(96, 147, 93, 0.8);}
+.btn-add,.btn-table, .btn-success {background: rgba(96, 147, 93, 0.8);}
 
 .btn-add,
 .btn-report,
 .btn-table,
-.btn-link {
+.btn-link, .btn-success {
     cursor: pointer;
     display: flex;
     border-radius: 2em;
@@ -400,9 +400,16 @@ button,input,optgroup,select,textarea {
     margin: 0.5em;
 }
 
-.btn-report {
+.btn-report{
     line-height: 1em;
     background: rgba(254, 215, 102, 0.62);
+}
+.btn-success{
+    width: 5em;
+    height: 3em;
+    padding: 0.8em;
+    margin-top: 1.5em;
+    border-style: none;
 }
 
 .btn_text {
@@ -416,8 +423,8 @@ button,input,optgroup,select,textarea {
     display: flex;
 }
 
-.btn-table:hover,.btn-add:hover,.btn-report:hover {background: #012118;}
-.btn_text:hover,.btn-report:hover{color: #E2EFD9;}
+.btn-table:hover,.btn-add:hover,.btn-report:hover, .btn-success:hover {background: #012118;}
+.btn_text:hover,.btn-report:hover,.btn-success:hover{color: #E2EFD9;}
 .font-weight-bold {font-weight: 700 !important;}
 
 .h5,h5 {font-size: 1.25rem;}
@@ -436,6 +443,7 @@ button,input,optgroup,select,textarea {
 .table td,
 .table th {
     padding: 0.35rem;
+    text-align: center;
 }
 
 .table-success,

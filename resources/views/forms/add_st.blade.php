@@ -20,7 +20,7 @@
 
   <div class="container">
     <form action="/forms/create_st" method="POST">
-    @csrf
+      @csrf
       <div class="row">
         <div class="col-25">
           <label for="departments">Факультет</label>
@@ -31,12 +31,6 @@
             @foreach ($departments as $department)
             <option value="{{$department->id}}">{{$department->title}}</option>
             @endforeach
-            <!-- <option value="13">Аспірантура</option>
-            <option value="14">Навчально-науковий інститут електричної інженерії та інформаційних техноголій</option>
-            <option value="15">Навчально-науковий інститут механічної інженерії, транспорту та природничих наук</option>
-            <option value="4">Факультет економіки і управління</option>
-            <option value="6">Факультет права, гуманітарних і соціальних наук</option>
-            <option value="7">Навчальний відділ</option> -->
           </select>
         </div>
       </div>
@@ -51,13 +45,6 @@
             @foreach ($courses as $course)
             <option value="{{$course->id}}">{{$course->number}}</option>
             @endforeach
-            <!-- <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option> -->
           </select>
         </div>
       </div>
@@ -72,15 +59,6 @@
             @foreach ($groups as $group)
             <option value="{{$group->id}}">{{$group->title}}</option>
             @endforeach
-            <!-- <option value="2536">БТ-18-1</option>
-            <option value="2534">ЕО-18-1</option>
-            <option value="2656">ПМс-19-1</option>
-            <option value="2538">ФТ-18-1</option>
-            <option value="2542">ЦБ-18-1</option>
-            <option value="2663">АТс-19-2з</option>
-            <option value="2753">ГЗс-19-1з</option>
-            <option value="2657">ПМс-19-1з</option>
-            <option value="2543">ЦБ-18-1з</option> -->
           </select>
         </div>
       </div>
@@ -111,6 +89,19 @@
           <input type="number" id="zalikovka_number" name="zalikovka_number" placeholder="№..." required>
         </div>
       </div>
+      <div class="row">
+        <div class="col-25">
+          <label class="form-check-label" for="flexCheckDefault">Наявні пільги</label>
+        </div>
+        <div class="col-75">
+          <select name="benefit">
+            <option value="0">...</option>
+            <option value="1">Так</option>
+            <option value="2">Ні</option>
+          </select>
+        </div>
+      </div>
+
 
       <div class="row">
         <input class="btn_edit" type="submit" value="Додати">

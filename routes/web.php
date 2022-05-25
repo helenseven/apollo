@@ -7,7 +7,9 @@ use App\Http\Controllers\RatingController;
 use App\Http\Controllers\ScientificActivityController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\CreativeActivityController;
+use App\Http\Controllers\DeaneryWorkerController;
 use App\Http\Controllers\ScholarshipRatingController;
+use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\WorkplanController;
 
 /*
@@ -27,28 +29,45 @@ Route::get('/', function () {
 Route::get('/login', function () {
     return view('login');
 });
+Route::post('/login', [DeaneryWorkerController::class, 'login'])->name('login');
+
+Route::get('/logout', [DeaneryWorkerController::class, 'logout'])->name('logout');
+
 //StudentList
 Route::get('/list/group', [StudentController::class, 'index'])->name('list.group');
 Route::post('/student/update/{id}', [StudentController::class, 'updateStudent'])->name('student.update');
 Route::get('/list/student/delete/{id}', [StudentController::class, 'deleteStudent'])->name('student.delete');
+Route::post('/list/group',  [StudentController::class, 'index'])->name('list.group');
 //ChairList
 Route::get('/list/chair', [ChairController::class, 'index'])->name('list.chair');
 Route::post('/chair-worker/update/{id}', [ChairController::class, 'updateChairWorker'])->name('chair_worker.update');
 Route::get('/list/chair-worker/delete/{id}', [ChairController::class, 'deleteChairWorker'])->name('chair_worker.delete');
+Route::post('/list/chair', [ChairController::class, 'index'])->name('list.chair');
 //Rating
 Route::get('/progress/rating', [RatingController::class, 'index'])->name('progress.rating');
 Route::post('/rating/update/{id}', [RatingController::class, 'updateRating'])->name('rating.update');
 Route::get('/progress/rating/delete/{id}', [RatingController::class, 'deleteRating'])->name('rating.delete');
+Route::post('/progress/rating', [RatingController::class, 'index'])->name('progress.rating');
+Route::get('/progress/rating/get_zvit',  [RatingController::class, 'getZvit'])->name('progress.rating.get_zvit');
 //ScientificActivityAccruedPoints
 Route::get('/scientificactivity/accrued_points', [ScientificActivityController::class, 'index'])->name('scientificactivity.accrued_points');
 Route::post('/scientificactivity/accrued_points/update/{id}', [ScientificActivityController::class, 'updateScientificActivity'])->name('accrued_scientific_points.update');
 Route::get('/scientificactivity/accrued_points/delete/{id}', [ScientificActivityController::class, 'deleteScientificActivity'])->name('accrued_scientific_points.delete');
+Route::post('/scientificactivity/accrued_points', [ScientificActivityController::class, 'index'])->name('scientificactivity.accrued_points');
+Route::get('/scientificactivity/get_scan/{id}', [ScientificActivityController::class, 'getScan'])->name('scientificactivity.get_scan');
 //CreativeActivityAccruedPoints
 Route::get('/creativework/accrued_points', [CreativeActivityController::class, 'index'])->name('creativework.accrued_points');
 Route::get('/creativework/accrued_points/delete/{id}', [CreativeActivityController::class, 'deleteCreativeActivity'])->name('accrued_creative_points.delete');
 Route::post('/creativework/accrued_points/update/{id}', [CreativeActivityController::class, 'updateCreativeActivity'])->name('accrued_creative_points.update');
+Route::post('/creativework/accrued_points', [CreativeActivityController::class, 'index'])->name('creativework.accrued_points');
+Route::get('/creativework/get_scan/{id}', [CreativeActivityController::class, 'getScan'])->name('creativework.get_scan');
 //ScholarshipRating
 Route::get('/progress/scholarship_rating',  [ScholarshipRatingController::class, 'index'])->name('progress.scholarship_rating');
+Route::post('/progress/scholarship_rating',  [ScholarshipRatingController::class, 'index'])->name('progress.scholarship_rating');
+Route::get('/progress/scholarship_rating/get_zvit',  [ScholarshipRatingController::class, 'getZvit'])->name('progress.scholarship_rating.get_zvit');
+//Statistics
+Route::get('/progress/statistics',[StatisticsController::class, 'index'])->name('progress.statistics');
+Route::post('/progress/statistics',[StatisticsController::class, 'index'])->name('progress.statistics.post');
 //Workplan
 Route::get('/workplan/speciality', [WorkplanController::class, 'index'])->name('workplan.speciality');
 
@@ -79,11 +98,6 @@ Route::prefix('forms')->group(function () {
 //Other
 Route::get('/other/information', function () {
     return view('other.information');
-});
-
-//Statistics
-Route::get('/progress/statistics', function () {
-    return view('progress.statistics');
 });
 //ActivitiesRules
 Route::get('/scientificactivity/rules', function () {

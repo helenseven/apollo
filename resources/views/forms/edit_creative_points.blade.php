@@ -19,7 +19,7 @@
     <p>І вона буде додана до бази даних</p>
 
     <div class="container">
-        <form action="/creativework/accrued_points/update/{{$creativeActivity->id}}" id="edit_form" method="POST">
+        <form action="/creativework/accrued_points/update/{{$creativeActivity->id}}" id="edit_form" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="row">
@@ -77,7 +77,7 @@
                     <label class="form-check-label" for="flexCheckDefault">Завантажити скан</label>
                 </div>
                 <div class="col-75">
-                    <input class="btn_down" type="file" value="Завантажити скан">
+                    <input class="btn_down" type="file" name="scan" value="Завантажити скан">
                 </div>
             </div>
             <div class="row">

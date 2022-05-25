@@ -10,17 +10,48 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Storage;
 
 class CreativeActivityController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $students = DB::select('SELECT students.fullname, creative_activities.* FROM creative_activities 
-        Join students on creative_activities.student_id = students.id');
+        if ($request->department !== null && $request->course !== null && $request->group !== null) {
+            $query = 'SELECT
+           finances.title, students.fullname, total_rating.*, 
+           creative_activities.public_mark, creative_activities.creat_achieviment_mark,
+           creative_activities.scan_added
+            FROM total_rating 
+            Join students on total_rating.student_id = students.id
+            Join finances on total_rating.finance_id = finances.id
+            Join creative_activities on creative_activities.student_id = students.id
+            WHERE total_rating.finance_id = 1
+                AND students.department_id = ' . $request->department
+                . ' AND students.course_id = ' . $request->course
+                . ' AND students.group_id = ' . $request->group;
+
+            $students = DB::select($query);
+            $departmentId = $request->department;
+            $courseId = $request->course;
+            $groupId = $request->group;
+        }else{
+            $students = [];
+            $departmentId = 0;
+            $courseId = 0;
+            $groupId = 0;
+        }
         $departments = Department::all();
         $courses = Course::all();
         $groups = Group::all();
-        return View::make('creativework.accrued_points')->with(['courses' => $courses, 'departments' => $departments, 'groups' => $groups, 'students' => $students]);
+        return View::make('creativework.accrued_points')->with([
+            'courses' => $courses, 
+            'departments' => $departments, 
+            'groups' => $groups,
+            'students' => $students,
+            'departmentId' => $departmentId,
+            'groupId' => $groupId,
+            'courseId' => $courseId
+             ]);
     }
 
     public function addCreativeActivity()
@@ -36,12 +67,19 @@ class CreativeActivityController extends Controller
             'public_mark' => 'required|numeric',
             'creat_achieviment_mark' => 'required|numeric',
             'scan_added' => 'required|numeric',
+            'scan' => 'mimes:pdf|max:20000'
         ]);
+        $path = '';
+
+        if ($request->file('scan') !== null && $request->file()) {
+            $path = Storage::disk('local')->put('.', $request->file('scan'));
+        }
         $creativeActivity = new CreativeActivity();
         $creativeActivity->student_id = $validated['student'];
         $creativeActivity->public_mark = $validated['public_mark'];
         $creativeActivity->creat_achieviment_mark = $validated['creat_achieviment_mark'];
         $creativeActivity->scan_added = $validated['scan_added'];
+        $creativeActivity->scan = $path;
         $creativeActivity->save();
         return redirect('/creativework/accrued_points');
     }
@@ -60,13 +98,21 @@ class CreativeActivityController extends Controller
             'public_mark' => 'required|numeric',
             'creat_achieviment_mark' => 'required|numeric',
             'scan_added' => 'required|numeric',
+            'scan' => 'mimes:pdf|max:20000'
         ]);
+
+        $path = '';
+
+        if ($request->file('scan') !== null && $request->file()) {
+            $path = Storage::disk('local')->put('.', $request->file('scan'));
+        }
 
         $creativeActivity = CreativeActivity::find($id);
         $creativeActivity->student_id = $validated['student'];
         $creativeActivity->public_mark = $validated['public_mark'];
         $creativeActivity->creat_achieviment_mark = $validated['creat_achieviment_mark'];
         $creativeActivity->scan_added = $validated['scan_added'];
+        $creativeActivity->scan = $path;
         $creativeActivity->save();
         return redirect('/creativework/accrued_points');
     }
@@ -75,6 +121,16 @@ class CreativeActivityController extends Controller
     {
         $creatActivity = CreativeActivity::where('id', $id)->delete();
         return redirect('/creativework/accrued_points');
+    }
+
+    public function getScan ($id)
+    {
+        $creativeActivity = CreativeActivity::find($id);
+        $headers = [
+            'Content-Type' => 'application/pdf',
+         ];
+        //dd(Storage::disk('local')->get($scientificActivity->scan));
+        return response()->download(Storage::disk('local')->path($creativeActivity->scan), 'filename.pdf', $headers);   
     }
 
 }

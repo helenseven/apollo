@@ -6,13 +6,11 @@ use App\Models\Course;
 use App\Models\Department;
 use App\Models\Group;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
-class ScholarshipRatingController extends Controller
+class StatisticsController extends Controller
 {
-    //
     public function index(Request $request)
     {
         if ($request->department !== null && $request->course !== null && $request->group !== null) {
@@ -35,46 +33,39 @@ class ScholarshipRatingController extends Controller
             $courseId = $request->course;
             $groupId = $request->group;
 
-            foreach ($students as $student) {
-                $student->additional_score = $student->akademic_mark + $student->creat_achieviment_mark
-                    + $student->public_mark + $student->scientific_mark;
-                $student->summary = $student->additional_score + $student->credit + $student->total_mark;
+            $socialCount = 0;
+            foreach($students as $student) {
+                if ($student->benefit == 1) {
+                    $socialCount++;
+                }
             }
-            $studentsCollection = collect($students);
-            $studentsCollection = $studentsCollection->sortByDesc('summary');
-            $students = $studentsCollection->toArray();
 
-            $scholarshipAmount = intval(round(count($students) * 0.4));
+            $upperScholarship = intval(round(count($students) * 0.1));
+            $scholarshipAmount = intval(round(count($students) * 0.4)) - $upperScholarship; 
+            $other = count($students) - $scholarshipAmount - $socialCount - $upperScholarship;
         } else {
-            $students = [];
-            $scholarshipAmount = 1;
+            $other = 0;
+            $scholarshipAmount = 0;
+            $upperScholarship = 0;
+            $socialCount = 0;
             $departmentId = 0;
             $courseId = 0;
             $groupId = 0;
         }
-
         $departments = Department::all();
         $courses = Course::all();
         $groups = Group::all();
-        return View::make('progress.scholarship_rating')->with([
-            'departments' => $departments,
+        return View::make('progress.statistics')->with([
             'courses' => $courses,
+            'departments' => $departments,
             'groups' => $groups,
-            'students' => $students,
+            'other' => $other,
+            'upperScholarship' => $upperScholarship,
             'scholarshipAmount' => $scholarshipAmount,
+            'socialCount' => $socialCount,
             'departmentId' => $departmentId,
             'groupId' => $groupId,
             'courseId' => $courseId
         ]);
-    }
-
-    public function getZvit()
-    {
-
-        $headers = [
-            'Content-Type' => 'application/pdf',
-        ];
-        //dd(Storage::disk('local')->get($scientificActivity->scan));
-        return response()->download(Storage::disk('local')->path('zvit.xlsx'), 'zvit.xlsx', $headers);
     }
 }

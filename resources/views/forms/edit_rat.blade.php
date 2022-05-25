@@ -32,8 +32,6 @@
                         @foreach ($finances as $finance)
                         <option @if ($finance->id === $rating->finance_id) selected @endif value="{{$finance->id}}">{{$finance->title}}</option>
                         @endforeach
-                        <!-- <option value="1">Бюджет</option>
-                        <option value="2">Контракт</option> -->
                     </select>
                 </div>
             </div>
@@ -47,10 +45,6 @@
                         @foreach ($students as $student)
                         <option @if ($student->id === $rating->student_id) selected @endif value="{{$student->id}}">{{$student->fullname}}</option>
                         @endforeach
-                        <!-- <option value="0">Деменко Анна Георгіївна</option>
-                        <option value="123">Деменко Анна Георгіївна</option>
-                        <option value="124">Дігтяр Євгеній Ігоревич</option>
-                        <option value="125">Дмитренко Олег Олександрович</option> -->
                     </select>
                 </div>
             </div>

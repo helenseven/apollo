@@ -21,4 +21,5 @@ class WorkplanController extends Controller
         $groups = Group::all();
         return View::make('workplan.speciality')->with(['courses' => $courses, 'departments' => $departments, 'groups' => $groups,'workplans' => $workplans]);
     }
+
 }

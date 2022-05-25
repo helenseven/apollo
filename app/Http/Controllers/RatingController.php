@@ -11,19 +11,44 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Storage;
 
 class RatingController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
-        $students = DB::select('SELECT finances.title, students.fullname, total_rating.* FROM total_rating 
+        if ($request->department !== null && $request->course !== null && $request->group !== null) {
+            $query = 'SELECT
+            finances.title, students.fullname, total_rating.* FROM total_rating 
         Join students on total_rating.student_id = students.id
-        Join finances on total_rating.finance_id = finances.id');
+        Join finances on total_rating.finance_id = finances.id
+           WHERE students.department_id = ' . $request->department
+                . ' AND students.course_id = ' . $request->course
+                . ' AND students.group_id = ' . $request->group;
+
+            $students = DB::select($query);
+            $departmentId = $request->department;
+            $courseId = $request->course;
+            $groupId = $request->group;
+        }else{
+            $students = [];
+            $departmentId = 0;
+            $courseId = 0;
+            $groupId = 0;
+        }
         $departments = Department::all();
         $courses = Course::all();
         $groups = Group::all();
-        return View::make('progress.rating')->with(['courses' => $courses, 'departments' => $departments, 'groups' => $groups, 'students' => $students]);
+        return View::make('progress.rating')->with([
+            'courses' => $courses,
+            'departments' => $departments,
+            'groups' => $groups,
+            'students' => $students,
+            'departmentId' => $departmentId,
+            'groupId' => $groupId,
+            'courseId' => $courseId
+        ]);
     }
 
     public function addRating()
@@ -59,7 +84,7 @@ class RatingController extends Controller
         $finances = Finance::all();
         $rating = Rating::find($id);
         $students = Student::all();
-        return View::make('forms.edit_rat')->with(['finances' => $finances,'students' => $students, 'rating' => $rating]);
+        return View::make('forms.edit_rat')->with(['finances' => $finances, 'students' => $students, 'rating' => $rating]);
     }
 
     public function updateRating(Request $request, $id)
@@ -88,5 +113,14 @@ class RatingController extends Controller
     {
         $rating = Rating::where('id', $id)->delete();
         return redirect('/progress/rating');
+    }
+
+    public function getZvit()
+    {
+
+        $headers = [
+            'Content-Type' => 'application/pdf',
+        ];
+        return response()->download(Storage::disk('local')->path('total_zvit.xlsx'), 'total_zvit.xlsx', $headers);
     }
 }

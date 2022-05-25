@@ -19,8 +19,8 @@
     <p>І вона буде додана до бази даних</p>
 
     <div class="container">
-        <form action="/forms/create_creative_points" method="POST">
-        @csrf
+        <form action="/forms/create_creative_points" method="POST" enctype="multipart/form-data">
+            @csrf
             <div class="row">
                 <div class="col-25">
                     <label for="student">ПІБ</label>
@@ -76,7 +76,7 @@
                     <label class="form-check-label" for="flexCheckDefault">Завантажити скан</label>
                 </div>
                 <div class="col-75">
-                    <input class="btn_down" type="file" value="Завантажити скан">
+                    <input class="btn_down" type="file" name="scan" value="Завантажити скан">
                 </div>
             </div>
             <div class="row">
